@@ -1,0 +1,22 @@
+{
+  "name": "logger-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "description": "Centralized logging microservice for PrraniGanga Microservices",
+  "author": "PrraniGanga",
+  "license": "ISC",
+  "dependencies": {
+    "winston": "^3.11.0",
+    "winston-daily-rotate-file": "^4.7.1",
+    "dotenv": "^17.2.3",
+    "bull": "^4.11.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
