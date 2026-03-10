@@ -33,8 +33,8 @@ async function startLogProcessor() {
       }
     }, {
       connection: {
-        host: process.env.REDIS_HOST || 'localhost',
-        port: process.env.REDIS_PORT || 6379,
+        host: config.redis.host,
+        port: config.redis.port,
       }
     });
 
