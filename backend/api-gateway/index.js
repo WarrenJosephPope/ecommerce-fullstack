@@ -81,12 +81,6 @@ app.use(
   createServiceProxy(config.services.auth.url, config.services.auth.prefix)
 );
 
-// Profile service - passes through /api/profile
-app.use(
-  config.services.profile.prefix,
-  createServiceProxy(config.services.profile.url, config.services.profile.prefix)
-);
-
 // Add more service routes here as needed
 // Example:
 // app.use(
