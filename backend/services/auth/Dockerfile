@@ -1,30 +1,17 @@
-FROM node:20-alpine
+FROM node:22-alpine
 
-# Set working directory
 WORKDIR /app
 
-# Copy package files
+# Install curl for health checks
+RUN apk add --no-cache curl
+
 COPY package*.json ./
+COPY prisma ./prisma
 
-# Install dependencies
-RUN npm ci --only=production
+RUN npm install
 
-# Copy prisma schema
-COPY prisma ./prisma/
-COPY prisma.config.ts ./
-
-# Generate Prisma Client
-RUN npx prisma generate
-
-# Copy application files
+# Copy app
 COPY . .
 
-# Expose port
-EXPOSE 3001
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:3001/api/auth/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
-
-# Start the application
-CMD ["node", "index.js"]
+# Run migrations and generate at startup (when DB is ready)
+CMD ["sh", "-c", "npx prisma migrate deploy && npx prisma generate && npm start"]
