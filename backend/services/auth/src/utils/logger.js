@@ -34,7 +34,7 @@ class Logger {
         metadata,
         timestamp: new Date().toISOString()
       };
-      await this.logsQueue.add(logEntry, { removeOnComplete: true });
+      await this.logsQueue.add('log', logEntry, { removeOnComplete: true });
     } catch (error) {
       console.error(`[${this.serviceName}] Failed to queue log:`, error.message);
     }
