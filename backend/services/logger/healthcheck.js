@@ -1,23 +1,23 @@
 /**
  * Health Check Script for Logger Service
- * Verifies the service can connect to Redis via Bull
+ * Verifies the service can connect to Redis via BullMQ
  */
 
-const Queue = require('bull');
+const { Queue } = require('bullmq');
 const config = require('./src/config');
 
 async function healthCheck() {
   let logsQueue;
   try {
-    // Get Redis URL from environment or use default
-    const redisUrl = config.redisUrl;
-    
     // Create a temporary queue instance to test Redis connectivity
     logsQueue = new Queue('health-check', {
-      redis: redisUrl
+      connection: {
+        host: process.env.REDIS_HOST || 'localhost',
+        port: process.env.REDIS_PORT || 6379,
+      }
     });
 
-    // Try to access the queue's client to verify Redis connection
+    // Try to access Redis connection to verify connectivity
     await logsQueue.client.ping();
     
     console.log('[Health Check] Logger service is healthy - Redis connection OK');
@@ -32,4 +32,4 @@ async function healthCheck() {
   }
 }
 
-healthCheck();healthCheck();
+healthCheck();

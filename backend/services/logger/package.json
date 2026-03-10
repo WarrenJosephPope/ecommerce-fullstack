@@ -14,7 +14,7 @@
     "winston": "^3.11.0",
     "winston-daily-rotate-file": "^4.7.1",
     "dotenv": "^17.2.3",
-    "bull": "^4.11.5"
+    "bullmq": "^5.70.4"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"
