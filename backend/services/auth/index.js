@@ -1,7 +1,9 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const swaggerUi = require('swagger-ui-express');
 const config = require('./src/config');
 const routes = require('./src/routes');
+const swaggerSpec = require('./src/config/swagger');
 const { errorHandler } = require('./src/middleware/error');
 const { NotFoundError } = require('./src/utils/errors');
 const logger = require('./src/utils/logger');
@@ -20,40 +22,18 @@ app.use((req, res, next) => {
   next();
 });
 
+// Swagger UI - mounted under /api/auth for API gateway access
+app.use('/api/auth/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: 'Auth Service API Documentation',
+}));
+
 // Mount API routes
 app.use('/api/auth', routes);
 
-// Root endpoint
+// Root endpoint - redirect to API docs
 app.get('/', (req, res) => {
-  res.json({
-    success: true,
-    message: 'Authentication Service API',
-    version: '1.0.0',
-    endpoints: {
-      health: '/api/auth/health',
-      email: {
-        register: 'POST /api/auth/email/register',
-        login: 'POST /api/auth/email/login',
-        changePassword: 'POST /api/auth/email/change-password',
-      },
-      phone: {
-        sendOtp: 'POST /api/auth/phone/send-otp',
-        verifyOtp: 'POST /api/auth/phone/verify-otp',
-        link: 'POST /api/auth/phone/link',
-      },
-      anonymous: {
-        create: 'POST /api/auth/anonymous/create',
-        convertToEmail: 'POST /api/auth/anonymous/convert-to-email',
-        convertToPhone: 'POST /api/auth/anonymous/convert-to-phone',
-      },
-      token: {
-        refresh: 'POST /api/auth/token/refresh',
-        rotate: 'POST /api/auth/token/rotate',
-        logout: 'POST /api/auth/token/logout',
-        me: 'GET /api/auth/token/me',
-      },
-    },
-  });
+  res.redirect('/api/auth/docs');
 });
 
 // 404 handler
