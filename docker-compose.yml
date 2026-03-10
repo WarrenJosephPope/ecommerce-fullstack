@@ -120,7 +120,7 @@ services:
       ecom-redis:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://ecom-auth:${AUTH_SERVICE_PORT}/health"]
+      test: ["CMD", "curl", "-f", "http://ecom-auth:${AUTH_SERVICE_PORT}/api/auth/health"]
       interval: 30s
       timeout: 10s
       retries: 3
