@@ -10,10 +10,6 @@ module.exports = {
       url: process.env.AUTH_SERVICE_URL,
       prefix: '/api/auth',
     },
-    profile: {
-      url: process.env.PROFILE_SERVICE_URL,
-      prefix: '/api/profile',
-    },
     // Add more services here as they are created
   },
   rateLimit: {
