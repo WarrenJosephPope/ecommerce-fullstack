@@ -126,11 +126,39 @@ All services will automatically restart when you make code changes.
 
 ### Accessing Services
 
-- **API Gateway**: `http://localhost:3000` (or configured port)
+- **API Gateway**: `http://localhost:{API_GATEWAY_PORT}` (default: 3000)
 - **Auth Service**: `http://localhost:4001`
 - **PostgreSQL**: `localhost:5432`
 - **Redis**: `localhost:6379`
 - **MinIO Console**: `http://localhost:9001`
+
+### API Documentation
+
+The Auth Service includes interactive Swagger/OpenAPI documentation for all authentication endpoints.
+
+**Access via API Gateway (Recommended):**
+```
+http://localhost:{API_GATEWAY_PORT}/api/auth/docs
+```
+
+**Direct Service Access (Development):**
+```
+http://localhost:4001/api/auth/docs
+```
+
+The Swagger UI provides:
+- Interactive API testing
+- Request/response schemas
+- Authentication requirements
+- Example payloads
+- All available endpoints organized by category:
+  - Health Check
+  - Email Authentication
+  - Phone Authentication (OTP)
+  - Anonymous Authentication
+  - Token Management
+
+> **Tip**: You can test protected endpoints by clicking "Authorize" in Swagger UI and entering a valid JWT access token.
 
 ### Development Workflow
 
@@ -210,6 +238,18 @@ View logs to ensure services started correctly:
 ```bash
 docker compose logs -f
 ```
+
+### API Documentation
+
+Once deployed, access the interactive API documentation:
+
+```
+http://localhost:{API_GATEWAY_PORT}/api/auth/docs
+```
+
+The Swagger UI provides complete documentation for all authentication endpoints, including request/response schemas and interactive testing capabilities.
+
+> **Production Note**: Consider restricting access to API documentation in production environments by configuring the API Gateway to require authentication for the `/api/auth/docs` endpoint.
 
 ### Managing Production Services
 
