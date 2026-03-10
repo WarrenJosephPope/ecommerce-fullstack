@@ -8,6 +8,7 @@ module.exports = {
   publicRoutes: [
     // Auth service - public endpoints
     '/api/auth/health',
+    '/api/auth/docs', // Swagger documentation
     '/api/auth/email/register',
     '/api/auth/email/login',
     '/api/auth/phone/send-otp',
