@@ -17,8 +17,8 @@ async function healthCheck() {
       }
     });
 
-    // Try to access Redis connection to verify connectivity
-    await logsQueue.client.ping();
+    // Wait for the queue to be ready - this will throw if Redis is unreachable
+    await logsQueue.waitUntilReady();
     
     console.log('[Health Check] Logger service is healthy - Redis connection OK');
     await logsQueue.close();
