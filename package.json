@@ -1,0 +1,20 @@
+{
+  "name": "ecom-microservices",
+  "scripts": {
+    "auth:dev": "cd backend/services/auth && npm run dev",
+    "logger:dev": "cd backend/services/logger && npm run dev",
+    "api-gateway:dev": "cd backend/api-gateway && npm run dev",
+    "dev": "concurrently \"npm run logger:dev\" \"npm run auth:dev\" \"npm run api-gateway:dev\"",
+    "auth:install": "cd backend/services/auth && npm install",
+    "logger:install": "cd backend/services/logger && npm install",
+    "api-gateway:install": "cd backend/api-gateway && npm install",
+    "install": "concurrently \"npm run auth:install\" \"npm run logger:install\" \"npm run api-gateway:install\"",
+    "auth-deploy": "cd backend/services/auth && npx prisma migrate deploy",
+    "deploy": "concurrently \"npm run auth-deploy\"",
+    "auth-generate": "cd backend/services/auth && npx prisma generate",
+    "generate": "concurrently \"npm run auth-generate\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
